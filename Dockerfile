@@ -1,5 +1,16 @@
-FROM openjdk:8
+# Node Base Image
+FROM node:12.2.0-alpine
 
-COPY  target/*.jar  myapp.jar
+#Working Directry
+WORKDIR /node
 
-ENTRYPOINT  [ "java" , "-jar" ,  "myapp.jar"  ]
+#Copy the Code
+COPY . .
+
+#Install the dependecies
+RUN npm install
+RUN npm run test
+EXPOSE 8000
+
+#Run the code
+CMD ["node","app.js"]
